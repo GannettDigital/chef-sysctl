@@ -32,9 +32,15 @@ describe 'sysctl::service' do
           runner.converge('sysctl::service')
         end
 
-        if platform == 'centos' || platform == 'fedora' || platform == 'redhat'
+        if { (platform == 'centos' || platform == 'fedora' || platform == 'redhat') && ! (node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7) }
           it 'creates a template /etc/rc.d/init.d/procps' do
             expect(chef_run).to create_template('/etc/rc.d/init.d/procps')
+          end
+        end
+
+        if node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7
+          it 'creates a template /etc/systemd/system/procps.service' do
+            expect(chef_run).to create_template('/etc/systemd/system/procps.service')
           end
         end
 

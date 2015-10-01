@@ -1,0 +1,6 @@
+[Unit]
+Description=Apply sysctl settings from all configuration files
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/sysctl -p <%= node['sysctl']['conf_file'] %>

@@ -20,8 +20,14 @@
 template '/etc/rc.d/init.d/procps' do
   source 'procps.init-rhel.erb'
   mode '0755'
-  only_if { platform_family?('rhel', 'fedora', 'pld') }
-end
+  only_if { platform_family?('rhel', 'fedora', 'pld') && ! (node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7) }
+end 
+
+template '/etc/systemd/system/procps.service' do
+  source 'procps.systemd-rhel.erb'
+  mode '0644'
+  only_if { node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7 }
+end 
 
 service 'procps' do
   supports :restart => true, :reload => true, :status => false
@@ -35,6 +41,10 @@ service 'procps' do
     if node['platform_version'].to_f >= 9.10
       provider Chef::Provider::Service::Upstart
     end
+  when 'centos', 'redhat'
+      if node['platform_version'].to_f >= 7
+        provider Chef::Provider::Service::Systemd
+      end
   end
   action :enable
 end
