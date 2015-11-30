@@ -1,6 +1,11 @@
 Sysctl
 ======
 
+v0.6.4
+-------------------
+* incorporate changes for systemd support
+* clean up testing suites
+
 v0.6.3 (unreleased)
 -------------------
 
