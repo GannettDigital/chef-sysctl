@@ -21,13 +21,12 @@
 
 include_recipe 'sysctl::service'
 
-if node['sysctl']['conf_dir']
-  directory node['sysctl']['conf_dir'] do
-    owner 'root'
-    group 'root'
-    mode 0755
-    action :create
-  end
+directory node['sysctl']['conf_dir'] do
+  owner 'root'
+  group 'root'
+  mode 0755
+  action :create
+  only_if { node['sysctl']['conf_dir'] }
 end
 
 if Sysctl.config_file(node)
@@ -54,6 +53,6 @@ if Sysctl.config_file(node)
     action :nothing
     source 'sysctl.conf.erb'
     mode '0644'
-    notifies :start, 'service[procps]', :immediately
+    notifies :restart, 'service[procps]', :immediately
   end
 end

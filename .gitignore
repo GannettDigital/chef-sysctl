@@ -17,3 +17,4 @@ bin/*
 .idea/
 .DS_Store
 .coverage
+Gemfile.lock

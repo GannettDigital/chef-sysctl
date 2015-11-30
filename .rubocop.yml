@@ -3,6 +3,8 @@ AllCops:
     - vendor/**/*
     - ruby/**/*
     - files/**/*
+    - Guardfile
+    - Rakefile
 
 Next:
   Enabled: false

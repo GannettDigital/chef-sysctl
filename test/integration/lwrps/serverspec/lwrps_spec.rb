@@ -11,7 +11,7 @@ describe file('/proc/sys/net/ipv4/tcp_rmem') do
 end
 
 persistence_file = case os[:family]
-                   when 'RedHat', 'Fedora', 'Debian', 'Ubuntu'
+                   when 'redhat', 'fedora', 'debian', 'ubuntu'
                      '/etc/sysctl.d/99-chef-attributes.conf'
                    else
                      '/etc/sysctl.conf'
