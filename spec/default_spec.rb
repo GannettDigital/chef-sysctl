@@ -99,11 +99,11 @@ describe 'sysctl::default' do
   }
 
   # Test all generic stuff on all platforms
-  platforms.each do |platform, versions|
-    versions.each do |version|
-      context "on Centos #{version}" do
+  platforms.each do |platform, pversions|
+    pversions.each do |pversion|
+      context "on Centos #{pversion}" do
         let(:chef_run) do
-          ChefSpec::SoloRunner.new(platform: platform, version: version) do |node|
+          ChefSpec::SoloRunner.new(platform: platform, version: pversion) do |node|
             node.set['sysctl']['conf_dir'] = '/etc/sysctl.d'
             node.set['sysctl']['params'] = {
               'vm' => {
