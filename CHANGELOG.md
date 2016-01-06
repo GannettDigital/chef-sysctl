@@ -1,6 +1,10 @@
 Sysctl
 ======
 
+v0.7.0
+-------------------
+* In Centos 7, procps should 'restart' and in Centos 6 it should 'reload' -- not the other way around.
+
 v0.6.4
 -------------------
 * incorporate changes for systemd support
