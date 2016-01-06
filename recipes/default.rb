@@ -51,7 +51,7 @@ if Sysctl.config_file(node)
       action :nothing
       source 'sysctl.conf.erb'
       mode '0644'
-      notifies :reload, 'service[procps]', :immediately
+      notifies :start, 'service[procps]', :immediately
     end
   else
     template Sysctl.config_file(node) do
