@@ -1,6 +1,10 @@
 Sysctl
 ======
 
+v0.7.0
+-------------------
+* In Centos < 7, procps should 'start' rather than 'restart' -- Chef looks for a running process called procps, and when it doesn't find one it doesn't restart. Because of the nature of what procps actually is (i.e., it's a task job and not a process), the `start` action is actually better than `restart` and retains idempotence.
+
 v0.6.4
 -------------------
 * incorporate changes for systemd support

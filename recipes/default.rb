@@ -46,13 +46,19 @@ if Sysctl.config_file(node)
     notifies :create, "template[#{Sysctl.config_file(node)}]", :immediately
   end
 
-  # this needs to have an action in case node.sysctl.params has changed
-  # and also needs to be called for persistence on lwrp changes via the
-  # ruby_block
-  template Sysctl.config_file(node) do
-    action :nothing
-    source 'sysctl.conf.erb'
-    mode '0644'
-    notifies :restart, 'service[procps]', :immediately
+  if node['platform_family'] == 'rhel' && node['platform_version'].to_f < 7
+    template Sysctl.config_file(node) do
+      action :nothing
+      source 'sysctl.conf.erb'
+      mode '0644'
+      notifies :start, 'service[procps]', :immediately
+    end
+  else
+    template Sysctl.config_file(node) do
+      action :nothing
+      source 'sysctl.conf.erb'
+      mode '0644'
+      notifies :restart, 'service[procps]', :immediately
+    end
   end
 end
