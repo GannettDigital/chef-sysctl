@@ -1,19 +1,21 @@
 name 'sysctl'
-maintainer 'Sander van Zoest'
-maintainer_email 'sander+cookbooks@vanzoest.com'
-issues_url 'https://github.com/svanzoest-cookbooks/sysctl/issues'
-source_url 'https://github.com/svanzoest-cookbooks/sysctl/'
-license 'Apache v2.0'
+maintainer 'Sous Chefs'
+maintainer_email 'help@sous-chefs.org'
+issues_url 'https://github.com/sous-chefs/sysctl/issues'
+source_url 'https://github.com/sous-chefs/sysctl'
+license 'Apache-2.0'
 description 'Configures sysctl parameters'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.7.0'
-supports 'ubuntu', '>= 12.04'
+version '0.9.0'
+chef_version '>= 12.5'
+ohai_version '>= 8'
+
+supports 'ubuntu', '>= 14.04'
 supports 'debian', '>= 7.0'
-supports 'centos', '>= 5.9'
+supports 'centos', '>= 6.0'
 supports 'scientific', '>= 6.4'
-%w(redhat pld).each do |os|
-  supports os
-end
-conflicts 'jn_sysctl'
-conflicts 'el-sysctl'
-depends 'ohai'
+supports 'suse', '>= 11.0'
+supports 'redhat'
+supports 'pld'
+
+depends 'ohai', '>= 4.0'
