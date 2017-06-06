@@ -3,11 +3,11 @@ require 'spec_helper'
 describe 'sysctl_test' do
   describe 'lwrps' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(step_into: ['sysctl_param']) do |node|
-        node.set['sysctl']['conf_dir'] = '/etc/sysctl.d'
-        node.set['sysctl']['params'] = {}
-        node.set['sysctl']['allow_sysctl_conf'] = false
-      end.converge 'sysctl_test'
+      ChefSpec::SoloRunner.new(step_into: ['sysctl_param'], platform: 'ubuntu', version: '16.04') do |node|
+        node.default['sysctl']['conf_dir'] = '/etc/sysctl.d'
+        node.default['sysctl']['params'] = {}
+        node.default['sysctl']['allow_sysctl_conf'] = false
+      end.converge 'sysctl_test::chefspec'
     end
 
     it 'applies a sysctl_param named net.ipv4.tcp_max_syn_backlog with value 12345' do

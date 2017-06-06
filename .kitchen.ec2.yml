@@ -10,46 +10,19 @@ driver:
   interface: private
   tags:
     OWNER: <%= ENV['AWS_OWNER_TAG'] %>
+    Name: <%= ENV['AWS_NAME_TAG'] %>
 
 provisioner:
   name: chef_zero
-  data_bags_path: "data_bags"
-  roles_path: "roles"
-  environments_path: "environments"
-  require_chef_omnibus: true
+  log_level: <%= ENV['CHEF_LOG_LEVEL'] || 'auto' %>
 
 transport:
-  ssh_key: <%= ENV['SSH_KEY_PATH'] %><%= ENV['AWS_SSH_KEY'] %>.pem
+  ssh_key: ~/.ssh/<%= ENV['AWS_SSH_KEY'] %>.pem
 
 platforms:
-  - name: ubuntu-12.04
+  - name: gci-centos7
     driver:
-      image_id: <%= ENV['AWS_UBUNTU12_AMI_ID'] %>
-      instance_type: <%= ENV['LINUX_INSTANCE_SIZE'] %>
-      user_data: <%= ENV['LINUX_USER_DATA_PATH'] %>
-    transport:
-      username: <%= ENV['AWS_UBUNTU12_USERNAME'] %>
-    run_list:
-      - recipe[apt::default]
-  - name: ubuntu-14.04
-    driver:
-      image_id: <%= ENV['AWS_UBUNTU14_AMI_ID'] %>
-      instance_type: <%= ENV['LINUX_INSTANCE_SIZE'] %>
-      user_data: <%= ENV['LINUX_USER_DATA_PATH'] %>
-    transport:
-      username: <%= ENV['AWS_UBUNTU14_USERNAME'] %>
-    run_list:
-      - recipe[apt::default]
-  - name: centos-6.7
-    driver:
-      image_id: <%= ENV['AWS_CENTOS6_AMI_ID'] %>
-      instance_type: <%= ENV['LINUX_INSTANCE_SIZE'] %>
-      user_data: <%= ENV['LINUX_USER_DATA_PATH'] %>
-    transport:
-      username: <%= ENV['AWS_CENTOS6_USERNAME'] %>
-  - name: centos-7.1
-    driver:
-      image_id: <%= ENV['AWS_CENTOS7_AMI_ID'] %>
+      image_id: <%= ENV['AWS_GCI_CENTOS7_AMI_ID'] %>
       instance_type: <%= ENV['LINUX_INSTANCE_SIZE'] %>
       user_data: <%= ENV['LINUX_USER_DATA_PATH'] %>
     transport:

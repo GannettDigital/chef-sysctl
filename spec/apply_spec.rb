@@ -4,12 +4,13 @@ require 'spec_helper'
 
 describe 'sysctl::apply' do
   platforms = {
-    'ubuntu' => ['12.04', '14.04'],
-    'debian' => ['7.0', '7.4'],
-    'fedora' => %w(18 20),
-    'redhat' => ['6.5', '7.0'],
-    'centos' => ['6.5', '7.0'],
-    'freebsd' => ['9.2']
+    'ubuntu' => ['14.04', '16.04'],
+    'debian' => ['7.11', '8.7'],
+    'fedora' => ['25'],
+    'redhat' => ['6.8', '7.3'],
+    'centos' => ['6.8', '7.3.1611'],
+    'freebsd' => ['10.3', '11.0'],
+    'suse' => ['12.2'],
   }
 
   # Test all generic stuff on all platforms
@@ -18,16 +19,16 @@ describe 'sysctl::apply' do
       context "on #{platform.capitalize} #{version}" do
         let(:chef_run) do
           runner = ChefSpec::SoloRunner.new(platform: platform, version: version)
-          runner.node.set['sysctl']['conf_dir'] = '/etc/sysctl.d'
-          runner.node.set['sysctl']['params'] = {
+          runner.node.default['sysctl']['conf_dir'] = '/etc/sysctl.d'
+          runner.node.default['sysctl']['params'] = {
             'vm' => {
-              'swappiness' => 19
+              'swappiness' => 19,
             },
             'net' => {
               'ipv4' => {
-                'tcp_fin_timeout' => 29
-              }
-            }
+                'tcp_fin_timeout' => 29,
+              },
+            },
           }
           runner.converge('sysctl::apply')
         end
